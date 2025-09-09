@@ -8,12 +8,14 @@ import HomeProject from '../Components/HomeProject'
 import HomeTestimonial from '../Components/HomeTestimonial'
 import HomeContactSection from '../Components/HomeContact'
 import HomeBlogSection from '../Components/HomeBlog'
+import HomeAbout2 from '../Components/HomeAbout2'
 
 const Home = () => {
   return (
     <div>
       <HomeHero/>
       <HomeAbout/>
+      <HomeAbout2/>
       <HomeWhatWeDo/>
       <ServicesSection/>
       <SkillsSection/>
