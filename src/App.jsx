@@ -21,8 +21,7 @@ const App = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/contact" element={<Contact />} />
-        {/* Optional 404 page */}
-        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+
       </Routes>
 
       <Footer />

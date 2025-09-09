@@ -35,65 +35,23 @@ const HomeProject = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {images.slice(0, 3).map((img, idx) => (
-          <div
-            key={idx}
-            onClick={() => openSlider(idx)}
-            className="relative cursor-pointer overflow-hidden rounded-lg shadow-lg group"
-          >
-            <motion.img
-              src={img}
-              alt={`Project ${idx + 1}`}
-              className="w-full h-48 sm:h-64 object-cover"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.5 }}
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <motion.div
-              className="absolute bottom-0 left-0 right-0 p-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileHover={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <h3 className="text-white text-lg font-bold">
-                Painting Outside In House
-              </h3>
-              <p className="text-white text-sm font-semibold">
-                Color Painting Services
-              </p>
-            </motion.div>
-            <button
-              onClick={() => openSlider(idx)}
-              className="absolute top-3 right-3 w-8 h-8 border border-white rounded-full text-white flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-80 transition"
-              aria-label="Open gallery"
-            >
-              +
-            </button>
-          </div>
-        ))}
-
-        <div className="col-span-full grid grid-cols-2 gap-6">
-          {images.slice(3).map((img, idx) => (
+      {/* Blur background when popup is open */}
+      <div className={`${isOpen ? "blur-md scale-[0.97]" : ""} transition-all duration-500`}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {images.slice(0, 3).map((img, idx) => (
             <div
-              key={idx + 3}
-              onClick={() => openSlider(idx + 3)}
+              key={idx}
               className="relative cursor-pointer overflow-hidden rounded-lg shadow-lg group"
             >
               <motion.img
                 src={img}
-                alt={`Project ${idx + 4}`}
+                alt={`Project ${idx + 1}`}
                 className="w-full h-48 sm:h-64 object-cover"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.5 }}
               />
               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 p-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileHover={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-              >
+              <motion.div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                 <h3 className="text-white text-lg font-bold">
                   Painting Outside In House
                 </h3>
@@ -101,8 +59,10 @@ const HomeProject = () => {
                   Color Painting Services
                 </p>
               </motion.div>
+
+              {/* + Button */}
               <button
-                onClick={() => openSlider(idx + 3)}
+                onClick={() => openSlider(idx)}
                 className="absolute top-3 right-3 w-8 h-8 border border-white rounded-full text-white flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-80 transition"
                 aria-label="Open gallery"
               >
@@ -110,13 +70,47 @@ const HomeProject = () => {
               </button>
             </div>
           ))}
+
+          <div className="col-span-full grid grid-cols-2 gap-6">
+            {images.slice(3).map((img, idx) => (
+              <div
+                key={idx + 3}
+                className="relative cursor-pointer overflow-hidden rounded-lg shadow-lg group"
+              >
+                <motion.img
+                  src={img}
+                  alt={`Project ${idx + 4}`}
+                  className="w-full h-48 sm:h-64 object-cover"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.5 }}
+                />
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <motion.div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                  <h3 className="text-white text-lg font-bold">
+                    Painting Outside In House
+                  </h3>
+                  <p className="text-white text-sm font-semibold">
+                    Color Painting Services
+                  </p>
+                </motion.div>
+                <button
+                  onClick={() => openSlider(idx + 3)}
+                  className="absolute top-3 right-3 w-8 h-8 border border-white rounded-full text-white flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-80 transition"
+                  aria-label="Open gallery"
+                >
+                  +
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
+      {/* Popup Swiper */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4"
             initial="hidden"
             animate="visible"
             exit="hidden"
@@ -134,14 +128,14 @@ const HomeProject = () => {
               navigation={true}
               pagination={{ clickable: true }}
               modules={[Navigation, Pagination]}
-              className="rounded-lg"
+              className="rounded-lg max-w-4xl"
             >
               {images.map((img, idx) => (
                 <SwiperSlide key={idx}>
                   <motion.img
                     src={img}
                     alt={`Project large ${idx + 1}`}
-                    className="w-full object-cover rounded-md mx-auto"
+                    className="w-full h-[600px] object-contain rounded-md mx-auto"
                     variants={slideVariants}
                     initial="initial"
                     animate="animate"
